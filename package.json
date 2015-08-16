@@ -1,0 +1,23 @@
+{
+  "name": "demo-template-three.js",
+  "version": "0.0.1",
+  "description": "demo template of three.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ykob/demo-template-threejs.git"
+  },
+  "private": true,
+  "scripts": {
+    "start": "gulp"
+  },
+  "engines": {
+    "node": "0.12.x"
+  },
+  "author": "Yoichi Kobayashi",
+  "license": "MIT",
+  "projectConfig": {
+    "PATH": "",
+    "DST": "",
+    "SRC": "src"
+  }
+}
