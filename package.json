@@ -1,10 +1,10 @@
 {
-  "name": "demo-template-three.js",
+  "name": "image-gallery-3d.js",
   "version": "0.0.1",
-  "description": "demo template of three.js",
+  "description": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ykob/demo-template-threejs.git"
+    "url": "https://github.com/ykob/image-gallery-3d.git"
   },
   "private": true,
   "scripts": {
