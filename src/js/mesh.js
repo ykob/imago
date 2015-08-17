@@ -4,7 +4,6 @@ var util = new Util();
 var exports = function() {
   var Mesh = function() {
     this.id = 0;
-    this.position = [0, 0, 0];
     this.geometry;
     this.material;
     this.mesh;
@@ -20,7 +19,7 @@ var exports = function() {
   };
 
   Mesh.prototype.setPosition = function() {
-    this.mesh.position.set(this.position[0], this.position[1], this.position[2]);
+    this.mesh.position.set(0, 0, 0);
   };
   
   return Mesh;

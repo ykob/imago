@@ -19,7 +19,7 @@ var renderer;
 var scene;
 var camera;
 var light;
-var ball;
+var images;
 
 var initThree = function() {
   canvas = document.getElementById('canvas');
@@ -45,11 +45,26 @@ var init = function() {
   light = new HemiLight();
   light.init(scene, util.getRadian(30), util.getRadian(60), 1000, 0xeeeeff, 0x777700, 1);
   
+  loadImages();
+  
   renderloop();
   setEvent();
   debounce(window, 'resize', function(event){
     resizeRenderer();
   });
+};
+
+var loadImages = function() {
+  var xmlhttp = new XMLHttpRequest();
+  var url = 'images.json';
+  
+  xmlhttp.onreadystatechange = function() {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      images = JSON.parse(xmlhttp.responseText);
+    }
+  }
+  xmlhttp.open('GET', url, true);
+  xmlhttp.send();
 };
 
 var setEvent = function () {
