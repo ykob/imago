@@ -1,0 +1,23 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=IM+Fell+Great+Primer+SC);
+@import "_normalize";
+
+html {
+  height: 100%;
+}
+body {
+  height: 100%;
+  margin: 0;
+}
+h1 {
+  margin: 0;
+  font-family: 'IM Fell Great Primer SC', serif;
+}
+canvas {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: -1;
+}

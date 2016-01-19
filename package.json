@@ -1,0 +1,41 @@
+{
+  "name": "imago",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://ykob@github.com/ykob/imago.git"
+  },
+  "keywords": [
+    "WebGL"
+  ],
+  "author": "yoichi kobayashi",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browser-sync": "^2.10.1",
+    "browserify": "^12.0.1",
+    "event-stream": "^3.3.2",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-load-plugins": "^1.1.0",
+    "gulp-notify": "^2.2.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-ruby-sass": "^2.0.6",
+    "require-dir": "^0.3.0",
+    "run-sequence": "^1.1.5",
+    "vinyl-source-stream": "^1.1.0",
+    "watchify": "^3.6.1"
+  },
+  "dependencies": {
+    "glslify": "^5.0.0",
+    "normalize.css": "^3.0.3"
+  }
+}
