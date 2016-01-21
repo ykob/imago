@@ -90,4 +90,6 @@ node_modules
 .sass-cache/
 *.css.map
 
-dst/*
+dst/js/*
+dst/css/*
+dst/*.html
