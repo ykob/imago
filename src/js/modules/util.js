@@ -8,11 +8,10 @@ export default {
   getRadian: function(degrees) {
     return degrees * Math.PI / 180;
   },
-  requestAnimationFrame: function(callback){
-    if (window.requestAnimationFrame) {
-      requestAnimationFrame(callback)
-    } else {
-      setTimeout(callback, 1000 / 60);
-    }
+  getPolar: function(rad1, rad2, r) {
+    var x = Math.sin(rad1) * Math.cos(rad2) * r;
+    var z = Math.sin(rad1) * Math.sin(rad2) * r;
+    var y = Math.cos(rad1) * r;
+    return new THREE.Vector3(x, y, z);
   }
 };
