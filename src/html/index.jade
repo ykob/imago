@@ -1,8 +1,33 @@
+- var website_name = "IAMGO"
+- var meta_description = "「想像すること」とは何だろうか？これが、本作のテーマであり、モチーフである。"
+
 doctype html
 html(lang="ja")
-  head
-    title learn WebGL
-    link(rel="stylesheet" href="css/main.css")
+  head  
+    meta(charset="utf-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    title #{website_name}
+    meta(name="viewport", content="width=device-width,initial-scale=1")
+    meta(name="description", content="#{meta_description}")
+    meta(name="keywords", content="IMAGO, yoshida hiroshi, 吉田博")
+    meta(name="theme-color", content="#ffffff")
+    
+    link(rel="shortcut icon" href="./img/common/icon.ico")
+    link(rel="apple-touch-icon" href="./img/common/app-icon.ico")
+    link(rel="stylesheet" href="./css/main.css")
+
+    meta(property="og:title", content="#{website_name}")
+    meta(property="og:site_name", content="#{website_name}")
+    meta(property="og:type", content="website")
+    meta(property="og:description", content="#{meta_description}")
+    meta(property="og:url", content="")
+    meta(property="og:image", content="")
+    
+    meta(name="twitter:card", content="summary_large_image")
+    meta(name="twitter:title", content="#{website_name}")
+    meta(name="twitter:description", content="#{meta_description}")
+    meta(name="twitter:image", content="")
+
   body
     h1 IMAGO
     script(src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r73/three.min.js")
