@@ -4,14 +4,23 @@
 
 html {
   height: 100%;
+  color: #fff;
+  background-color: #000;
 }
 body {
   height: 100%;
   margin: 0;
 }
 h1 {
+  position: absolute;
+  right: 0;
+  bottom: 30px;
+  left: 0;
   margin: 0;
   font-family: 'IM Fell Great Primer SC', serif;
+  font-size: 40px;
+  text-align: center;
+  letter-spacing: 8px;
 }
 canvas {
   position: absolute;
