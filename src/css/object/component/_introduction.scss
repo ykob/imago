@@ -1,0 +1,49 @@
+.c-introduction {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  &__wrap {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    z-index: 2;
+    transform: translateY(-50%);
+  }
+  &__header {
+    margin: 0;
+    font-size: 56px;
+    letter-spacing: 16px;
+    text-align: center;
+    perspective: 1000px;
+  }
+  &__text {
+    display: inline-block;
+    opacity: 0;
+    transform-origin: center 0px;
+    transform: translateY(0.5em) rotate3d(1, 0, 0, 80deg);
+    transition: 1s;
+    &.is-viewed {
+      opacity: 1;
+      transform: rotate3d(1, 0, 0, 0deg);
+    }
+  }
+  &__loading {
+    width: 50px;
+    height: 50px;
+  }
+  &__bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 1);
+    transition: 3s;
+    &.is-transparent {
+      opacity: 0;
+    }
+  }
+}

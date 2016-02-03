@@ -34,7 +34,6 @@ const loadImage = () => {
     xhr.send();
   });
 };
-
 const initExhibit = (array) => {
   let count = 0;
   for (var i = 0; i < array.length; i++) {
@@ -75,20 +74,42 @@ const initExhibit = (array) => {
           side: THREE.DoubleSide
         });
         const exhibit = new THREE.Mesh(exhibit_geometry, material);
-
         exhibit.position.copy(Util.getPolar(rad1, rad2, radius));
         exhibit.lookAt(center_point);
         exhibits[index] = exhibit;
-        scene.add(exhibit);
         count++;
         if (array.length == count) {
           setTimeout(() => {
+            for (var i = 0; i < exhibits.length; i++) {
+              scene.add(exhibits[i]);
+            }
+          }, 2000);
+          setTimeout(() => {
+            removeIntro();
             mode = 1;
-          }, 1000);
+          }, 2500);
+
         }
       }
     )
   }
+};
+const intro = () => {
+  $('.c-introduction__text').each(function(index, el) {
+    const $this = $(this);
+    setTimeout(function() {
+      $this.addClass('is-viewed');
+    }, 200 * index);
+  });
+};
+const removeIntro = () => {
+  $('.c-introduction__bg').addClass('is-transparent');
+  $('.c-introduction__text').each(function(index, el) {
+    const $this = $(this);
+    setTimeout(function() {
+      $this.removeClass('is-viewed');
+    }, 200 * index);
+  });
 };
 const moveCameraAuto = (radius) => {
   return Util.getPolar(
@@ -146,17 +167,20 @@ const init = () => {
   scene.add(center_light);
   scene.add(move_light);
 
+  intro();
   renderLoop();
   setEvent();
 };
 const render = () => {
   if (mode == 1) {
     time++;
-    camera.move.anchor.copy(moveCameraAuto(4000 + Math.sin(time / 500) * 2000));
+    camera.move.anchor.copy(moveCameraAuto(4000 - Math.sin(time / 500) * 2000));
   }
-  camera.render();
-  move_light.move.anchor.copy(camera.move.position);
-  move_light.render();
+  if (mode >= 1) {
+    camera.render();
+    move_light.move.anchor.copy(camera.move.position);
+    move_light.render();
+  }
   renderer.render(scene, camera);
 };
 const renderLoop = () => {
