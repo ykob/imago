@@ -10,16 +10,35 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true
 });
 const light = new THREE.HemisphereLight(0xffffff, 0x333333, 1);
+const center_point = new THREE.Vector3();
+
+let time = 0;
+
+const loadImage = () => {
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState == 4 && xhr.status == 200) {
+        const array = JSON.parse(xhr.responseText);
+          resolve(array);
+      }
+    };
+    xhr.open('GET', 'json/filelist.json', true);
+    xhr.send();
+  });
+};
 
 const init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  camera.move.velocity.set(0, 0, 0);
-  camera.move.anchor.set(6000, 6000, 6000);
-  camera.lookAt(new THREE.Vector3(0, 0, 0));
+  camera.move.velocity.copy(Util.getPolar(Math.PI / 180 * 45, Math.PI / 180 , 8000));
+  camera.move.anchor.copy(Util.getPolar(Math.PI / 180 * 45, Math.PI / 180, 9000));
 
-  const center_point = new THREE.Vector3();
+  loadImage().then((array) => {
+    console.log(array);
+  });
+
   const geometry = new THREE.PlaneGeometry(100, 100, 2, 2);
   const material = new THREE.MeshPhongMaterial({
     color: 0xffffff,
@@ -28,9 +47,9 @@ const init = () => {
   for (var i = 0; i < 500; i++) {
     const cube = new THREE.Mesh(geometry, material);
     cube.position.copy(Util.getPolar(
-      Util.getRadian(Util.getRandomInt(30, 150)),
+      Util.getRadian(Util.getRandomInt(45, 135)),
       Util.getRadian(Util.getRandomInt(0, 359)),
-      Util.getRandomInt(1500, 3000)
+      Util.getRandomInt(1500, 4000)
     ));
     cube.lookAt(center_point);
     scene.add(cube);
@@ -41,6 +60,8 @@ const init = () => {
   renderLoop();
 };
 const render = () => {
+  time++;
+  camera.move.anchor.copy(Util.getPolar(Math.PI / 180 * (time / 40 + 45), Math.PI / 180 * (time / 20), 9000));
   camera.render();
   renderer.render(scene, camera);
 };
