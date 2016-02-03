@@ -1,6 +1,7 @@
 import Util from './modules/util.js';
 import resizeWindow from './modules/resize_window.js';
 import ForceCamera from './modules/force_camera.js';
+import ForceLight from './modules/force_light.js';
 
 const glslify = require('glslify');
 const canvas = document.getElementById('webgl-contents');
@@ -9,7 +10,9 @@ const camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 10
 const renderer = new THREE.WebGLRenderer({
   antialias: true
 });
-const light = new THREE.HemisphereLight(0xffffff, 0x333333, 1);
+const hemisphere_light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.1);
+const center_light = new THREE.PointLight(0xffffff, 1, 6000);
+const move_light = new ForceLight(0xffffff, 1, 3000);
 const center_point = new THREE.Vector3();
 const exhibits = [];
 const exhibit_geometry = new THREE.PlaneGeometry(250, 250, 2, 2);
@@ -95,12 +98,15 @@ const init = () => {
 
   camera.move.velocity.copy(moveCameraAuto(8000));
   camera.move.anchor.copy(moveCameraAuto(9000));
+  move_light.move.velocity.copy(camera.move.velocity);
 
   loadImage().then((array) => {
     initExhibit(array);
   });
 
-  scene.add(light);
+  scene.add(hemisphere_light);
+  scene.add(center_light);
+  scene.add(move_light);
 
   renderLoop();
 };
@@ -108,6 +114,8 @@ const render = () => {
   time++;
   camera.move.anchor.copy(moveCameraAuto(9000 + Math.sin(time / 500) * 4500));
   camera.render();
+  move_light.move.anchor.copy(camera.move.position);
+  move_light.render();
   renderer.render(scene, camera);
 };
 const renderLoop = () => {
