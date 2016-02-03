@@ -1,0 +1,14 @@
+.c-summary {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  &__header {
+    margin: 0 0 10px;
+    font-size: 42px;
+    letter-spacing: 10px;
+  }
+  &__paragraph {
+    line-height: 1.5;
+    letter-spacing: 2px;
+  }
+}
