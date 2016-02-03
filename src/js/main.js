@@ -1,10 +1,11 @@
 import Util from './modules/util.js';
-import resizeWindow from './modules/resizeWindow.js';
+import resizeWindow from './modules/resize_window.js';
+import ForceCamera from './modules/force_camera.js';
 
 const glslify = require('glslify');
 const canvas = document.getElementById('webgl-contents');
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 100000);
+const camera = new ForceCamera(45, window.innerWidth / window.innerHeight, 1, 100000);
 const renderer = new THREE.WebGLRenderer({
   antialias: true
 });
@@ -14,7 +15,8 @@ const init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  camera.position.set(7000, 7000, 5000);
+  camera.move.velocity.set(0, 0, 0);
+  camera.move.anchor.set(6000, 6000, 6000);
   camera.lookAt(new THREE.Vector3(0, 0, 0));
 
   const center_point = new THREE.Vector3();
@@ -39,6 +41,7 @@ const init = () => {
   renderLoop();
 };
 const render = () => {
+  camera.render();
   renderer.render(scene, camera);
 };
 const renderLoop = () => {
