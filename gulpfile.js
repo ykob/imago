@@ -9,6 +9,9 @@ requireDir('./gulp/tasks');
 
 gulp.task('predefault', callback => {
   runSequence(
+    'filelist',
+    'filelist-replace',
+    'filelist-clean',
     ['jade', 'sass', 'watchify'],
     'serve',
     callback
