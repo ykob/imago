@@ -79,6 +79,7 @@ const initExhibit = (array) => {
         exhibits[index] = exhibit;
         count++;
         if (array.length == count) {
+          mode = 1;
           setTimeout(() => {
             for (var i = 0; i < exhibits.length; i++) {
               scene.add(exhibits[i]);
@@ -86,7 +87,6 @@ const initExhibit = (array) => {
           }, 2000);
           setTimeout(() => {
             removeIntro();
-            mode = 1;
           }, 2500);
 
         }
