@@ -11,8 +11,8 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true
 });
 const hemisphere_light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.1);
-const center_light = new THREE.PointLight(0xffffff, 0.4, 6000);
-const move_light = new ForceLight(0xffffff, 0.4, 3000);
+const center_light = new THREE.PointLight(0xffffff, 0.4, 3000);
+const move_light = new ForceLight(0xffffff, 0.6, 500);
 const center_point = new THREE.Vector3();
 const exhibits = [];
 const exhibit_geometry = new THREE.PlaneGeometry(120, 120, 2, 2);
@@ -47,21 +47,21 @@ const initExhibit = (array) => {
       rad1 = Util.getRadian(90);
       rad2 = Util.getRadian(i % 2 * 180);
     } else if (i < 57) {
-      radius = 600 + (i - 2) * 40;
-      rad1 = Util.getRadian((i - 2) % 4 * 20 + 50);
-      rad2 = Util.getRadian((i - 2) / (57 - 2) * 360);
+      radius = 800;
+      rad1 = Util.getRadian(((i - 2) % 4) * 30 + 45);
+      rad2 = Util.getRadian((i - 2) / (57 - 2 + 1) * 360);
     } else if (i < 115) {
-      radius = 600 + (57 - 2) * 40 + 300 + (i - 57) * 30;
-      rad1 = Util.getRadian((i - 57) % 5 * 20 + 40);
-      rad2 = Util.getRadian((i - 57) / (115 - 57) * 360);
+      radius = 1300;
+      rad1 = Util.getRadian(((i - 57) % 6) * 20 + 45);
+      rad2 = Util.getRadian((i - 57) / (115 - 57 + 1) * 360);
     } else if (i < 139) {
-      radius = 600 + (115 - 57) * 30 + 300 * 2 + (i - 115) * 20;
-      rad1 = Util.getRadian((i - 115) % 6 * 20 + 30);
-      rad2 = Util.getRadian((i - 115) / (139 - 115) * 360);
+      radius = 1800;
+      rad1 = Util.getRadian(((i - 115) % 8) * 15 + 45);
+      rad2 = Util.getRadian((i - 115) / (139 - 115 + 1) * 360);
     } else if (i < 221) {
-      radius = 600 + (139 - 115) * 20 + 300 * 3 + (i - 139) * 20;
-      rad1 = Util.getRadian((i - 139) % 7 * 20 + 20);
-      rad2 = Util.getRadian((i - 139) / (221 - 139) * 360);
+      radius = 2300;
+      rad1 = Util.getRadian(((i - 139) % 12) * 10 + 45);
+      rad2 = Util.getRadian((i - 139) / (221 - 139 + 1) * 360);
     }
 
     const loader = new THREE.TextureLoader();
