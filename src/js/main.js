@@ -64,24 +64,28 @@ const initExhibit = (array) => {
       rad2 = Util.getRadian((i - 139) / (221 - 139) * 360);
     }
 
-    const img = new Image();
-    img.src = array[i];
-    img.onload = () => {
-      const material = new THREE.MeshPhongMaterial({
-        color: 0xffffff,
-        map: THREE.ImageUtils.loadTexture(img.src),
-        side: THREE.DoubleSide
-      });
-      const cube = new THREE.Mesh(exhibit_geometry, material);
+    const loader = new THREE.TextureLoader();
+    loader.load(
+      array[i],
+      (texture) => {
+        const material = new THREE.MeshPhongMaterial({
+          color: 0xffffff,
+          map: texture,
+          side: THREE.DoubleSide
+        });
+        const cube = new THREE.Mesh(exhibit_geometry, material);
 
-      cube.position.copy(Util.getPolar(rad1, rad2, radius));
-      cube.lookAt(center_point);
-      scene.add(cube);
-      count++;
-    };
-    if (array.length == count) {
-      mode = 1;
-    }
+        cube.position.copy(Util.getPolar(rad1, rad2, radius));
+        cube.lookAt(center_point);
+        scene.add(cube);
+        count++;
+        if (array.length == count) {
+          setTimeout(() => {
+            mode = 1;
+          }, 1000);
+        }
+      }
+    )
   }
 };
 const moveCameraAuto = (radius) => {
@@ -98,7 +102,9 @@ const init = () => {
 
   camera.move.velocity.copy(moveCameraAuto(8000));
   camera.move.anchor.copy(moveCameraAuto(9000));
-  move_light.move.velocity.copy(camera.move.velocity);
+  camera.render();
+  move_light.move.velocity.copy(camera.move.position);
+  move_light.render();
 
   loadImage().then((array) => {
     initExhibit(array);
@@ -111,11 +117,13 @@ const init = () => {
   renderLoop();
 };
 const render = () => {
-  time++;
-  camera.move.anchor.copy(moveCameraAuto(9000 + Math.sin(time / 500) * 4500));
-  camera.render();
-  move_light.move.anchor.copy(camera.move.position);
-  move_light.render();
+  if (mode == 1) {
+    time++;
+    camera.move.anchor.copy(moveCameraAuto(9000 + Math.sin(time / 500) * 4500));
+    camera.render();
+    move_light.move.anchor.copy(camera.move.position);
+    move_light.render();
+  }
   renderer.render(scene, camera);
 };
 const renderLoop = () => {
