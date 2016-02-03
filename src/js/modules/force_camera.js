@@ -12,8 +12,8 @@ export default class ForceCamera extends THREE.PerspectiveCamera {
     this.move.updateVelocity();
     this.move.updatePosition();
     this.position.copy(this.move.position);
-    this.look.applyHook(0, 0.01);
-    this.look.applyDrag(0.1);
+    this.look.applyHook(0, 0.02);
+    this.look.applyDrag(0.3);
     this.look.updateVelocity();
     this.look.updatePosition();
     this.lookAt(this.look.position);
