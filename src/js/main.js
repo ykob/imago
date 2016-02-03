@@ -11,13 +11,13 @@ const renderer = new THREE.WebGLRenderer({
   antialias: true
 });
 const hemisphere_light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.1);
-const center_light = new THREE.PointLight(0xffffff, 1, 6000);
-const move_light = new ForceLight(0xffffff, 1, 3000);
+const center_light = new THREE.PointLight(0xffffff, 0.4, 6000);
+const move_light = new ForceLight(0xffffff, 0.4, 3000);
 const center_point = new THREE.Vector3();
 const exhibits = [];
-const exhibit_geometry = new THREE.PlaneGeometry(250, 250, 2, 2);
+const exhibit_geometry = new THREE.PlaneGeometry(120, 120, 2, 2);
 
-let current_id = 0;
+let current_id = -1;
 let time = 0;
 let mode = 0;
 
@@ -43,41 +43,43 @@ const initExhibit = (array) => {
     let rad2 = 0;
 
     if (i < 2) {
-      radius = 1000;
+      radius = 300;
       rad1 = Util.getRadian(90);
       rad2 = Util.getRadian(i % 2 * 180);
     } else if (i < 57) {
-      radius = 1500 + (i - 2) * 20;
-      rad1 = Util.getRadian((i - 2) % 4 * 30 + 45);
+      radius = 600 + (i - 2) * 40;
+      rad1 = Util.getRadian((i - 2) % 4 * 20 + 50);
       rad2 = Util.getRadian((i - 2) / (57 - 2) * 360);
     } else if (i < 115) {
-      radius = 2500 + (i - 57) * 20;
-      rad1 = Util.getRadian((i - 57) % 8 * 15 + 45);
+      radius = 600 + (57 - 2) * 40 + 300 + (i - 57) * 30;
+      rad1 = Util.getRadian((i - 57) % 5 * 20 + 40);
       rad2 = Util.getRadian((i - 57) / (115 - 57) * 360);
     } else if (i < 139) {
-      radius = 3500 + (i - 115) * 20;
-      rad1 = Util.getRadian((i - 115) % 8 * 15 + 45);
+      radius = 600 + (115 - 57) * 30 + 300 * 2 + (i - 115) * 20;
+      rad1 = Util.getRadian((i - 115) % 6 * 20 + 30);
       rad2 = Util.getRadian((i - 115) / (139 - 115) * 360);
     } else if (i < 221) {
-      radius = 4500 + (i - 139) * 20;
-      rad1 = Util.getRadian((i - 139) % 8 * 15 + 45);
+      radius = 600 + (139 - 115) * 20 + 300 * 3 + (i - 139) * 20;
+      rad1 = Util.getRadian((i - 139) % 7 * 20 + 20);
       rad2 = Util.getRadian((i - 139) / (221 - 139) * 360);
     }
 
     const loader = new THREE.TextureLoader();
+    const index = i;
     loader.load(
-      array[i],
+      array[index],
       (texture) => {
         const material = new THREE.MeshPhongMaterial({
           color: 0xffffff,
           map: texture,
           side: THREE.DoubleSide
         });
-        const cube = new THREE.Mesh(exhibit_geometry, material);
+        const exhibit = new THREE.Mesh(exhibit_geometry, material);
 
-        cube.position.copy(Util.getPolar(rad1, rad2, radius));
-        cube.lookAt(center_point);
-        scene.add(cube);
+        exhibit.position.copy(Util.getPolar(rad1, rad2, radius));
+        exhibit.lookAt(center_point);
+        exhibits[index] = exhibit;
+        scene.add(exhibit);
         count++;
         if (array.length == count) {
           setTimeout(() => {
@@ -95,13 +97,43 @@ const moveCameraAuto = (radius) => {
     radius
   )
 };
+const moveExhibit = (i) => {
+  camera.move.anchor.copy(
+    exhibits[i].position.clone().normalize().multiplyScalar(exhibits[i].position.length() - 200)
+  );
+  camera.look.anchor.copy(exhibits[i].position);
+};
+const moveNextExhibit = () => {
+  if (mode !== 2) mode = 2;
+  current_id++;
+  moveExhibit(current_id);
+};
+const movePrevExhibit = () => {
+  if (mode !== 2) mode = 2;
+  current_id--;
+  moveExhibit(current_id);
+};
+const setEvent = () => {
+  document.addEventListener('keydown', (event) => {
+    switch (event.keyIdentifier) {
+      case 'Left':
+        movePrevExhibit();
+        break;
+      case 'Right':
+        moveNextExhibit();
+        break;
+      default:
+        break;
+    }
+  });
+};
 
 const init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  camera.move.velocity.copy(moveCameraAuto(8000));
-  camera.move.anchor.copy(moveCameraAuto(9000));
+  camera.move.velocity.copy(moveCameraAuto(3000));
+  camera.move.anchor.copy(moveCameraAuto(4000));
   camera.render();
   move_light.move.velocity.copy(camera.move.position);
   move_light.render();
@@ -115,15 +147,16 @@ const init = () => {
   scene.add(move_light);
 
   renderLoop();
+  setEvent();
 };
 const render = () => {
   if (mode == 1) {
     time++;
-    camera.move.anchor.copy(moveCameraAuto(9000 + Math.sin(time / 500) * 4500));
-    camera.render();
-    move_light.move.anchor.copy(camera.move.position);
-    move_light.render();
+    camera.move.anchor.copy(moveCameraAuto(4000 + Math.sin(time / 500) * 2000));
   }
+  camera.render();
+  move_light.move.anchor.copy(camera.move.position);
+  move_light.render();
   renderer.render(scene, camera);
 };
 const renderLoop = () => {
