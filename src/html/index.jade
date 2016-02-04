@@ -1,5 +1,6 @@
-- var website_name = "IMAGO"
-- var meta_description = "「想像すること」とは何だろうか？これが、本作のテーマであり、モチーフである。"
+- var website_name = 'IMAGO'
+- var meta_description = '「想像すること」とは何だろうか？これが、本作のテーマであり、モチーフである。'
+- var path_abs = 'http://www.hiroshi-yoshida.jp/imago/';
 
 doctype html
 html(lang="ja")
@@ -20,13 +21,13 @@ html(lang="ja")
     meta(property="og:site_name", content="#{website_name}")
     meta(property="og:type", content="website")
     meta(property="og:description", content="#{meta_description}")
-    meta(property="og:url", content="http://www.hiroshi-yoshida.jp/imago/")
-    meta(property="og:image", content="http://www.hiroshi-yoshida.jp/imago/img/common/share.png")
+    meta(property="og:url", content="#{path_abs}")
+    meta(property="og:image", content="#{path_abs}img/common/share.png")
     
     meta(name="twitter:card", content="summary_large_image")
     meta(name="twitter:title", content="#{website_name}")
     meta(name="twitter:description", content="#{meta_description}")
-    meta(name="twitter:image", content="http://www.hiroshi-yoshida.jp/imago/img/common/share.png")
+    meta(name="twitter:image", content="#{path_abs}img/common/share.png")
 
   body
     .c-introduction
@@ -94,6 +95,13 @@ html(lang="ja")
           p Be that as it may appear to hang my hat on the power of conventional image which can be interpreted in various ways, this is nothing more than a particular story. Furthermore this is a sheer story of my indivisual. And this is not a kind which can be reached to the completion, there is no beginning or ending. This is a deed as if you are swimming in the wide ocean far from anywhere and come out to breathe once after sinking deeply a little while again and again.
           p However, whilst speculating the oncoming great social changes, I anticipate that many people will have to deal with problems on their own just as I have faced, or so will the entire society. On top of that, it may not be just once or twice. That is one of the most significant functions of imaginative faculty and it can be the preparation to overcome the changes by creativity.
           p As a consequence of personal content, if you find some sort of universality in the story and have empathy even a faint one, I feel grateful.
+        .c-information__share
+          .c-information__share-item.c-information__share-item--facebook
+            a(href="http://www.facebook.com/share.php?u=#{path_abs}")
+              span.c-information__share-text facebook
+          .c-information__share-item.c-information__share-item--twitter
+            a(href="http://twitter.com/share?url=#{path_abs}&amp;text=IMAGO")
+              span.c-information__share-text twitter
         .c-information__credit
           p
             |artist: 

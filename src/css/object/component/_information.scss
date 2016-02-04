@@ -53,8 +53,42 @@
     margin-top: 60px;
     font-size: 24px;
   }
-  &__credit {
+  &__share {
     margin: 100px 0 0;
+    text-align: center;
+    &-item {
+      display: inline-block;
+      margin: 0 10px;
+      a {
+        @include btn(25px);
+        background-position: center center;
+        background-repeat: no-repeat;
+      }
+      &--facebook {
+        a {
+          background-image: url('../img/common/icon-facebook.png');
+          background-size: auto 18px;
+          &:hover {
+            background-image: url('../img/common/icon-facebook-on.png');
+          }
+        }
+      }
+      &--twitter {
+        a {
+          background-image: url('../img/common/icon-twitter.png');
+          background-size: auto 16px;
+          &:hover {
+            background-image: url('../img/common/icon-twitter-on.png');
+          }
+        }
+      }
+    }
+    &-text {
+      display: none;
+    }
+  }
+  &__credit {
+    margin: 30px 0 0;
     font-size: 20px;
     text-align: center;
     letter-spacing: 2px;
