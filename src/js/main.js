@@ -113,8 +113,11 @@ const moveExhibit = (i) => {
   pager.setCurrentNum(i + 1);
 };
 const moveNextExhibit = () => {
-  if (mode !== 2) mode = 2;
   current_id++;
+  if (mode !== 2) {
+    mode = 2;
+    pager.visible();
+  }
   if (current_id < exhibits.length) {
     moveExhibit(current_id);
   } else {
@@ -122,8 +125,11 @@ const moveNextExhibit = () => {
   }
 };
 const movePrevExhibit = () => {
-  if (mode !== 2) mode = 2;
   current_id--;
+  if (mode !== 2) {
+    mode = 2;
+    pager.visible();
+  }
   if (current_id > -1) {
     moveExhibit(current_id);
   } else if(current_id <= -2) {
@@ -136,7 +142,7 @@ const movePrevExhibit = () => {
 const backToPanorama = () => {
   current_id = -1;
   mode = 1;
-  pager.setCurrentNum(0);
+  pager.hide();
   camera.look.anchor.set(0, 0, 0);
 };
 const setEvent = () => {
@@ -163,7 +169,6 @@ const setEvent = () => {
     }
   });
 };
-
 const init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
