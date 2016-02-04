@@ -147,7 +147,6 @@ const backToPanorama = () => {
 };
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {
-    console.log(event.code);
     switch (event.code) {
       case 'ArrowLeft':
         movePrevExhibit();
