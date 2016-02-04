@@ -24,11 +24,15 @@
     display: inline-block;
     opacity: 0;
     transform-origin: center 0px;
-    transform: translateY(0.5em) rotate3d(1, 0, 0, 80deg);
+    transform: translateY(1em) rotate3d(1, 0, 0, 80deg);
     transition: 1s;
     &.is-viewed {
       opacity: 1;
       transform: rotate3d(1, 0, 0, 0deg);
+    }
+    &.is-hidden {
+      opacity: 0;
+      transform: translateY(-0.1em) rotate3d(1, 0, 0, -80deg);
     }
   }
   &__loading {

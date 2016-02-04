@@ -107,7 +107,7 @@ const removeIntro = () => {
   $('.c-introduction__text').each(function(index, el) {
     const $this = $(this);
     setTimeout(function() {
-      $this.removeClass('is-viewed');
+      $this.addClass('is-hidden');
     }, 200 * index);
   });
 };
