@@ -5,27 +5,21 @@ const $bg = $('.c-introduction__bg');
 
 export default class Introduction {
   start() {
-    $text.each(function(index, el) {
-      const $this = $(this);
-      setTimeout(function() {
-        $this.addClass('is-viewed');
-      }, 200 * index);
-    });
+    setTimeout(function() {
+      $text.addClass('is-viewed');
+    }, 500);
     setTimeout(function() {
       $loader.addClass('is-viewed');
-    }, 1000);
+    }, 1500);
   };
   finish() {
     $bg.addClass('is-transparent');
     setTimeout(function() {
       $loader.removeClass('is-viewed');
     }, 1000);
-    $text.each(function(index, el) {
-      const $this = $(this);
-      setTimeout(function() {
-        $this.addClass('is-hidden');
-      }, 200 * index + 1500);
-    });
+    setTimeout(function() {
+      $text.addClass('is-hidden');
+    }, 1500);
     setTimeout(function() {
       $intro.hide();
     }, 5000);
