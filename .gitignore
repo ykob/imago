@@ -93,3 +93,4 @@ node_modules
 dst/js/*
 dst/css/*
 dst/*.html
+dst/json/*
