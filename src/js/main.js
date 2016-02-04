@@ -2,6 +2,7 @@ import Util from './modules/util.js';
 import resizeWindow from './modules/resize_window.js';
 import ForceCamera from './modules/force_camera.js';
 import ForceLight from './modules/force_light.js';
+import Pager from './modules/pager.js';
 
 const glslify = require('glslify');
 const canvas = document.getElementById('webgl-contents');
@@ -16,6 +17,7 @@ const move_light = new ForceLight(0xffffff, 0.6, 500);
 const center_point = new THREE.Vector3();
 const exhibits = [];
 const exhibit_geometry = new THREE.PlaneGeometry(120, 120, 2, 2);
+const pager = new Pager();
 
 let current_id = -1;
 let time = 0;
@@ -84,11 +86,11 @@ const initExhibit = (array) => {
             for (var i = 0; i < exhibits.length; i++) {
               scene.add(exhibits[i]);
             }
+            pager.setAllNum(exhibits.length);
           }, 2000);
           setTimeout(() => {
             removeIntro();
           }, 2500);
-
         }
       }
     )
@@ -116,23 +118,41 @@ const moveCameraAuto = (radius) => {
     Math.PI / 180 * (Math.sin(Math.PI / 180 * time / 40) + 1) * 45 + 45,
     Math.PI / 180 * (time / 20),
     radius
-  )
+  );
 };
 const moveExhibit = (i) => {
   camera.move.anchor.copy(
     exhibits[i].position.clone().normalize().multiplyScalar(exhibits[i].position.length() - 200)
   );
   camera.look.anchor.copy(exhibits[i].position);
+  pager.setCurrentNum(i + 1);
 };
 const moveNextExhibit = () => {
   if (mode !== 2) mode = 2;
   current_id++;
-  moveExhibit(current_id);
+  if (current_id < exhibits.length) {
+    moveExhibit(current_id);
+  } else {
+    backToPanorama();
+  }
 };
 const movePrevExhibit = () => {
   if (mode !== 2) mode = 2;
   current_id--;
-  moveExhibit(current_id);
+  if (current_id > -1) {
+    moveExhibit(current_id);
+  } else if(current_id <= -2) {
+    current_id = exhibits.length - 1;
+    moveExhibit(current_id);
+  } else {
+    backToPanorama();
+  }
+};
+const backToPanorama = () => {
+  current_id = -1;
+  mode = 1;
+  pager.setCurrentNum(0);
+  camera.look.anchor.set(0, 0, 0);
 };
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {

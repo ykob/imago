@@ -1,0 +1,13 @@
+.c-pager {
+  opacity: 0;
+  position: absolute;
+  right: 30px;
+  bottom: 25px;
+  line-height: 1.5;
+  font-size: 14px;
+  letter-spacing: 3px;
+  transition: 1s;
+  &.is-viewed {
+    opacity: 1;
+  }
+}
