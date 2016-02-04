@@ -1,0 +1,40 @@
+.c-information-btn {
+  width: 30px;
+  height: 30px;
+  box-sizing: border-box;
+  line-height: 30px;
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  font-size: 20px;
+  text-align: center;
+  z-index: 1;
+  &__wrap {
+    cursor: pointer;
+    position: relative;
+    padding-left: 2px;
+    color: #fff;
+    transition: 0.3s;
+    &:before {
+      width: 30px;
+      height: 30px;
+      box-sizing: border-box;
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      border-radius: 15px;
+      transition: 0.3s;
+    }
+    &:hover {
+      color: #000;
+      &:before {
+        transform: scale(0.9);
+        background-color: #fff;
+      }
+    }
+  }
+}

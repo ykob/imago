@@ -1,3 +1,4 @@
+const $intro = $('.c-introduction');
 const $text = $('.c-introduction__text');
 const $loader = $('.c-introduction__loader');
 const $bg = $('.c-introduction__bg');
@@ -25,5 +26,8 @@ export default class Introduction {
         $this.addClass('is-hidden');
       }, 200 * index + 1500);
     });
+    setTimeout(function() {
+      $intro.hide();
+    }, 5000);
   };
 }
