@@ -1,5 +1,5 @@
 import Util from './modules/util.js';
-import resizeWindow from './modules/resize_window.js';
+import debounce from './modules/debounce.js';
 import ForceCamera from './modules/force_camera.js';
 import ForceLight from './modules/force_light.js';
 import Introduction from './modules/introduction.js';
@@ -147,6 +147,12 @@ const backToPanorama = () => {
   pager.hide();
   camera.look.anchor.set(0, 0, 0);
 };
+const resizeRenderer = function() {
+  const body_width  = document.body.clientWidth;
+  const body_height = document.body.clientHeight;
+  renderer.setSize(body_width, body_height);
+  camera.resize(body_width, body_height);
+};
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {
     switch (event.code) {
@@ -171,6 +177,9 @@ const setEvent = () => {
   });
   $('.c-information-btn').on('click', () => {
     information.toggle();
+  });
+  debounce(window, 'resize', function(event){
+    resizeRenderer();
   });
 };
 const init = () => {
