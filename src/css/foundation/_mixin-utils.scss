@@ -1,0 +1,31 @@
+@mixin btn($radius) {
+  width: $radius * 2;
+  height: $radius * 2;
+  cursor: pointer;
+  display: block;
+  line-height: $radius * 2;
+  position: relative;
+  color: #fff;
+  text-align: center;
+  &:before {
+    width: $radius * 2;
+    height: $radius * 2;
+    box-sizing: border-box;
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+    border-radius: $radius;
+    transition: 0.3s;
+  }
+  &:hover {
+    color: #000;
+    &:before {
+      transform: scale(0.9);
+      background-color: #fff;
+    }
+  }
+}
