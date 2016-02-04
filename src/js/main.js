@@ -2,6 +2,7 @@ import Util from './modules/util.js';
 import resizeWindow from './modules/resize_window.js';
 import ForceCamera from './modules/force_camera.js';
 import ForceLight from './modules/force_light.js';
+import Introduction from './modules/introduction.js';
 import Pager from './modules/pager.js';
 
 const glslify = require('glslify');
@@ -17,6 +18,7 @@ const move_light = new ForceLight(0xffffff, 0.6, 500);
 const center_point = new THREE.Vector3();
 const exhibits = [];
 const exhibit_geometry = new THREE.PlaneGeometry(120, 120, 2, 2);
+const introduction = new Introduction();
 const pager = new Pager();
 
 let current_id = -1;
@@ -89,29 +91,12 @@ const initExhibit = (array) => {
             pager.setAllNum(exhibits.length);
           }, 2000);
           setTimeout(() => {
-            removeIntro();
+            introduction.finish();
           }, 2500);
         }
       }
     )
   }
-};
-const intro = () => {
-  $('.c-introduction__text').each(function(index, el) {
-    const $this = $(this);
-    setTimeout(function() {
-      $this.addClass('is-viewed');
-    }, 200 * index);
-  });
-};
-const removeIntro = () => {
-  $('.c-introduction__bg').addClass('is-transparent');
-  $('.c-introduction__text').each(function(index, el) {
-    const $this = $(this);
-    setTimeout(function() {
-      $this.addClass('is-hidden');
-    }, 200 * index);
-  });
 };
 const moveCameraAuto = (radius) => {
   return Util.getPolar(
@@ -156,12 +141,22 @@ const backToPanorama = () => {
 };
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {
-    switch (event.keyIdentifier) {
-      case 'Left':
+    console.log(event.code);
+    switch (event.code) {
+      case 'ArrowLeft':
         movePrevExhibit();
         break;
-      case 'Right':
+      case 'ArrowRight':
         moveNextExhibit();
+        break;
+      case 'KeyK':
+        movePrevExhibit();
+        break;
+      case 'KeyJ':
+        moveNextExhibit();
+        break;
+      case 'Escape':
+        backToPanorama();
         break;
       default:
         break;
@@ -187,7 +182,7 @@ const init = () => {
   scene.add(center_light);
   scene.add(move_light);
 
-  intro();
+  introduction.start();
   renderLoop();
   setEvent();
 };
