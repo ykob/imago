@@ -55,7 +55,7 @@ module.exports.scripts = {
 
 module.exports.filelist = {
   src: [
-    `${DIR.DST}${DIR.PATH}/img/**/*.jpg`,
+    `${DIR.DST}${DIR.PATH}/img/exhibits/**/*.jpg`,
   ],
   temp: `${DIR.DST}${DIR.PATH}/json_temp/`,
   dest: `${DIR.DST}${DIR.PATH}/json/`
