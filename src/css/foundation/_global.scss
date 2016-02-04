@@ -17,6 +17,13 @@ canvas {
   left: 0;
   z-index: -1;
 }
+a {
+  color: #afc27d;
+  transition: 0.3s;
+  &:hover {
+    text-decoration: none;
+  }
+}
 ::selection {
   background-color: rgba(0, 0, 0, 0);
 }

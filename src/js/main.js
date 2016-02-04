@@ -3,6 +3,7 @@ import resizeWindow from './modules/resize_window.js';
 import ForceCamera from './modules/force_camera.js';
 import ForceLight from './modules/force_light.js';
 import Introduction from './modules/introduction.js';
+import Information from './modules/information.js';
 import Pager from './modules/pager.js';
 
 const glslify = require('glslify');
@@ -19,6 +20,7 @@ const center_point = new THREE.Vector3();
 const exhibits = [];
 const exhibit_geometry = new THREE.PlaneGeometry(120, 120, 2, 2);
 const introduction = new Introduction();
+const information = new Information();
 const pager = new Pager();
 
 let current_id = -1;
@@ -166,6 +168,9 @@ const setEvent = () => {
       default:
         break;
     }
+  });
+  $('.c-information-btn').on('click', () => {
+    information.toggle();
   });
 };
 const init = () => {

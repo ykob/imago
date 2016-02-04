@@ -1,3 +1,62 @@
-.c-information {
-
+  .c-information {
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  line-height: 2;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  overflow-y: scroll;
+  background-color: rgba(0, 0, 0, 0.7);
+  letter-spacing: 2px;
+  transition: 0.5s;
+  &.is-viewed {
+    visibility: visible;
+    opacity: 1;
+  }
+  &__wrap {
+    max-width: 980px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 100px 40px;
+  }
+  &__header {
+    line-height: 1.1;
+    margin: 0 0 10px;
+    padding-left: 10px;
+    font-size: 42px;
+    text-align: center;
+    letter-spacing: 10px;
+  }
+  &__sub-header {
+    line-height: 1.1;
+    margin: 0 0 30px;
+    padding-left: 5px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 100;
+    letter-spacing: 5px;
+  }
+  &__summary {
+    text-align: center;
+    font-family: $read-font;
+  }
+  &__about {
+    font-family: $read-font;
+    letter-spacing: 2px;
+  }
+  &__about-header {
+    margin-top: 60px;
+    font-size: 24px;
+  }
+  &__credit {
+    margin: 100px 0 0;
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 2px;
+  }
 }
