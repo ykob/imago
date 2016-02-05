@@ -5,6 +5,7 @@ import ForceLight from './modules/force_light.js';
 import Introduction from './modules/introduction.js';
 import Information from './modules/information.js';
 import Pager from './modules/pager.js';
+import Popup from './modules/popup.js';
 
 const glslify = require('glslify');
 const canvas = document.getElementById('webgl-contents');
@@ -182,6 +183,14 @@ const setEvent = () => {
     resizeRenderer();
   });
 };
+const setPopup = () => {
+  const popups = [];
+  $('.popup').each(function(i) {
+    popups[i] = new Popup($(this));
+  });
+  popups[0].init('share facebook');
+  popups[1].init('share twitter');
+};
 const init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -203,6 +212,7 @@ const init = () => {
   introduction.start();
   renderLoop();
   setEvent();
+  setPopup();
 };
 const render = () => {
   if (mode == 1) {
