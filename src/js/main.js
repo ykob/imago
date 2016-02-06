@@ -116,6 +116,7 @@ const moveExhibit = (i) => {
   pager.setCurrentNum(i + 1);
 };
 const moveNextExhibit = () => {
+  if (information.is_viewed) return;
   current_id++;
   if (mode !== 2) {
     mode = 2;
@@ -128,6 +129,7 @@ const moveNextExhibit = () => {
   }
 };
 const movePrevExhibit = () => {
+  if (information.is_viewed) return;
   current_id--;
   if (mode !== 2) {
     mode = 2;
@@ -143,6 +145,7 @@ const movePrevExhibit = () => {
   }
 };
 const backToPanorama = () => {
+  if (information.is_viewed) return;
   current_id = -1;
   mode = 1;
   pager.hide();
@@ -156,6 +159,7 @@ const resizeRenderer = function() {
 };
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {
+    if (mode < 1) return;
     switch (event.code) {
       case 'ArrowLeft':
         movePrevExhibit();
@@ -169,8 +173,15 @@ const setEvent = () => {
       case 'KeyJ':
         moveNextExhibit();
         break;
+      case 'KeyI':
+        information.toggle();
+        break;
       case 'Escape':
-        backToPanorama();
+        if (information.is_viewed) {
+          information.toggle();
+        } else {
+          backToPanorama();
+        }
         break;
       default:
         break;
