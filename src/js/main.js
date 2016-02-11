@@ -58,16 +58,20 @@ const initExhibit = (array) => {
       rad2 = Util.getRadian((i - 2) / (57 - 2 + 1) * 360);
     } else if (i < 115) {
       radius = 1300;
-      rad1 = Util.getRadian(((i - 57) % 6) * 20 + 45);
+      rad1 = Util.getRadian(((i - 57) % 5) * 25 + 40);
       rad2 = Util.getRadian((i - 57) / (115 - 57 + 1) * 360);
     } else if (i < 139) {
       radius = 1800;
-      rad1 = Util.getRadian(((i - 115) % 8) * 15 + 45);
+      rad1 = Util.getRadian(((i - 115) % 6) * 20 + 40);
       rad2 = Util.getRadian((i - 115) / (139 - 115 + 1) * 360);
     } else if (i < 221) {
       radius = 2300;
-      rad1 = Util.getRadian(((i - 139) % 12) * 10 + 45);
+      rad1 = Util.getRadian(((i - 139) % 7) * 20 + 30);
       rad2 = Util.getRadian((i - 139) / (221 - 139 + 1) * 360);
+    } else {
+      radius = 2800;
+      rad1 = Util.getRadian(((i - 221) % 8) * 20 + 20);
+      rad2 = Util.getRadian((i - 221) / (324 - 221 + 1) * 360);
     }
 
     const loader = new THREE.TextureLoader();
