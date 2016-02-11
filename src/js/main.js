@@ -24,6 +24,7 @@ const introduction = new Introduction();
 const information = new Information();
 const pager = new Pager();
 
+let sphere = null;
 let current_id = -1;
 let time = 0;
 let mode = 0;
@@ -104,6 +105,14 @@ const initExhibit = (array) => {
       }
     )
   }
+};
+const createSphere = () => {
+  const geometry = new THREE.SphereGeometry(120, 32, 32);
+  const material = new THREE.MeshBasicMaterial({
+    color: 0xffffff
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+  return mesh;
 };
 const moveCameraAuto = (radius) => {
   return Util.getPolar(
@@ -219,10 +228,12 @@ const init = () => {
   loadImage().then((array) => {
     initExhibit(array);
   });
+  sphere = createSphere();
 
   scene.add(hemisphere_light);
   scene.add(center_light);
   scene.add(move_light);
+  scene.add(sphere);
 
   introduction.start();
   renderLoop();
