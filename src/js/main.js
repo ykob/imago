@@ -69,14 +69,14 @@ const initExhibit = (array) => {
       radius = 1800;
       rad1 = Util.getRadian(((i - 115) % 6) * 20 + 40);
       rad2 = Util.getRadian((i - 115) / (139 - 115 + 1) * 360);
-    } else if (i < 221) {
+    } else if (i < 219) {
       radius = 2300;
       rad1 = Util.getRadian(((i - 139) % 7) * 20 + 30);
-      rad2 = Util.getRadian((i - 139) / (221 - 139 + 1) * 360);
+      rad2 = Util.getRadian((i - 139) / (219 - 139 + 1) * 360);
     } else {
       radius = 2800;
-      rad1 = Util.getRadian(((i - 221) % 8) * 20 + 20);
-      rad2 = Util.getRadian((i - 221) / (324 - 221 + 1) * 360);
+      rad1 = Util.getRadian(((i - 219) % 8) * 20 + 20);
+      rad2 = Util.getRadian((i - 219) / (322 - 219 + 1) * 360);
     }
 
     const loader = new THREE.TextureLoader();
@@ -108,7 +108,7 @@ const initExhibit = (array) => {
           }
         }
       )
-    }, 2000);
+    }, 3000);
   }
 };
 const createSphere = () => {
