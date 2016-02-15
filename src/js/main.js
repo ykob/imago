@@ -43,7 +43,11 @@ const loadImage = () => {
   });
 };
 const initExhibit = (array) => {
+  const $counter_current = $('.c-introduction__counter-num--current');
+  const $counter_all = $('.c-introduction__counter-num--all');
   let count = 0;
+
+  $counter_all.text(array.length);
   for (var i = 0; i < array.length; i++) {
     let radius = 0;
     let rad1 = 0;
@@ -77,33 +81,34 @@ const initExhibit = (array) => {
 
     const loader = new THREE.TextureLoader();
     const index = i;
-    loader.load(
-      array[index],
-      (texture) => {
-        const material = new THREE.MeshPhongMaterial({
-          color: 0xffffff,
-          map: texture,
-          side: THREE.DoubleSide
-        });
-        const exhibit = new THREE.Mesh(exhibit_geometry, material);
-        exhibit.position.copy(Util.getPolar(rad1, rad2, radius));
-        exhibit.lookAt(center_point);
-        exhibits[index] = exhibit;
-        count++;
-        if (array.length == count) {
-          mode = 1;
-          setTimeout(() => {
+    setTimeout(() => {
+      loader.load(
+        array[index],
+        (texture) => {
+          const material = new THREE.MeshPhongMaterial({
+            color: 0xffffff,
+            map: texture,
+            side: THREE.DoubleSide
+          });
+          const exhibit = new THREE.Mesh(exhibit_geometry, material);
+          exhibit.position.copy(Util.getPolar(rad1, rad2, radius));
+          exhibit.lookAt(center_point);
+          exhibits[index] = exhibit;
+          count++;
+          $counter_current.text(count);
+          if (array.length == count) {
+            mode = 1;
             for (var i = 0; i < exhibits.length; i++) {
               scene.add(exhibits[i]);
             }
             pager.setAllNum(exhibits.length);
-          }, 2000);
-          setTimeout(() => {
-            introduction.finish();
-          }, 2500);
+            setTimeout(() => {
+              introduction.finish();
+            }, 1500);
+          }
         }
-      }
-    )
+      )
+    }, 2000);
   }
 };
 const createSphere = () => {

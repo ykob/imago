@@ -45,7 +45,7 @@
     width: 50px;
     height: 50px;
     opacity: 0;
-    margin: 20px auto 0;
+    margin: 10px auto;
     animation-name: preloader;
     animation-duration: 0.4s;
     animation-timing-function: linear;
@@ -53,6 +53,18 @@
     transition: 1.5s;
     &.is-viewed {
       opacity: 1;
+    }
+  }
+  &__counter {
+    opacity: 0;
+    text-align: center;
+    transition: 1.5s;
+    transition-delay: 0.25s;
+    &.is-viewed {
+      opacity: 1;
+    }
+    &-num {
+      padding: 0 0.5em;
     }
   }
   &__bg {

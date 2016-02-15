@@ -1,6 +1,7 @@
 const $intro = $('.c-introduction');
 const $text = $('.c-introduction__text');
 const $loader = $('.c-introduction__loader');
+const $counter = $('.c-introduction__counter');
 const $bg = $('.c-introduction__bg');
 
 export default class Introduction {
@@ -10,12 +11,14 @@ export default class Introduction {
     }, 500);
     setTimeout(function() {
       $loader.addClass('is-viewed');
+      $counter.addClass('is-viewed');
     }, 1500);
   };
   finish() {
     $bg.addClass('is-transparent');
     setTimeout(function() {
       $loader.removeClass('is-viewed');
+      $counter.removeClass('is-viewed');
     }, 1000);
     setTimeout(function() {
       $text.addClass('is-hidden');
