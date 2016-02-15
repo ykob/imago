@@ -107,7 +107,7 @@ const initExhibit = (array) => {
   }
 };
 const createSphere = () => {
-  const geometry = new THREE.SphereGeometry(120, 32, 32);
+  const geometry = new THREE.SphereGeometry(40, 32, 32);
   const material = new THREE.MeshBasicMaterial({
     color: 0xffffff
   });
