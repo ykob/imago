@@ -173,7 +173,8 @@ const resizeRenderer = function() {
   const body_width  = document.body.clientWidth;
   const body_height = document.body.clientHeight;
   renderer.setSize(body_width, body_height);
-  camera.resize(body_width, body_height);
+  camera.aspect = body_width / body_height;
+  camera.updateProjectionMatrix();
 };
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {
