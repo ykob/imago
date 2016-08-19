@@ -48,6 +48,14 @@
   &__about {
     font-family: $read-font;
     letter-spacing: 2px;
+    hr {
+      width: 100px;
+      height: 1px;
+      display: block;
+      margin: 30px auto;
+      border: 0;
+      background-color: #fff;
+    }
   }
   &__about-header {
     margin-top: 60px;
