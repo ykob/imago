@@ -57,26 +57,26 @@ const initExhibit = (array) => {
       radius = 300;
       rad1 = Util.getRadian(90);
       rad2 = Util.getRadian(i % 2 * 180);
-    } else if (i < 57) {
+    } else if (i < 56) {
       radius = 800;
       rad1 = Util.getRadian(((i - 2) % 4) * 30 + 45);
-      rad2 = Util.getRadian((i - 2) / (57 - 2 + 1) * 360);
-    } else if (i < 115) {
+      rad2 = Util.getRadian((i - 2) / (56 - 2 + 1) * 360);
+    } else if (i < 114) {
       radius = 1300;
-      rad1 = Util.getRadian(((i - 57) % 5) * 25 + 40);
-      rad2 = Util.getRadian((i - 57) / (115 - 57 + 1) * 360);
-    } else if (i < 139) {
+      rad1 = Util.getRadian(((i - 56) % 5) * 25 + 40);
+      rad2 = Util.getRadian((i - 56) / (114 - 56 + 1) * 360);
+    } else if (i < 138) {
       radius = 1800;
-      rad1 = Util.getRadian(((i - 115) % 6) * 20 + 40);
-      rad2 = Util.getRadian((i - 115) / (139 - 115 + 1) * 360);
-    } else if (i < 219) {
+      rad1 = Util.getRadian(((i - 114) % 6) * 20 + 40);
+      rad2 = Util.getRadian((i - 114) / (138 - 114 + 1) * 360);
+    } else if (i < 217) {
       radius = 2300;
-      rad1 = Util.getRadian(((i - 139) % 7) * 20 + 30);
-      rad2 = Util.getRadian((i - 139) / (219 - 139 + 1) * 360);
+      rad1 = Util.getRadian(((i - 138) % 7) * 20 + 30);
+      rad2 = Util.getRadian((i - 138) / (217 - 138 + 1) * 360);
     } else {
       radius = 2800;
-      rad1 = Util.getRadian(((i - 219) % 8) * 20 + 20);
-      rad2 = Util.getRadian((i - 219) / (322 - 219 + 1) * 360);
+      rad1 = Util.getRadian(((i - 217) % 8) * 20 + 20);
+      rad2 = Util.getRadian((i - 217) / (295 - 217 + 1) * 360);
     }
 
     const loader = new THREE.TextureLoader();
