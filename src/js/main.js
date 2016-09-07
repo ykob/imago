@@ -6,17 +6,17 @@ import Introduction from './modules/introduction.js';
 import Information from './modules/information.js';
 import Pager from './modules/pager.js';
 import Popup from './modules/popup.js';
+import Force3 from './modules/force3.js';
+import Bloom from './modules/bloom/bloom.js';
 
 const glslify = require('glslify');
 const canvas = document.getElementById('webgl-contents');
-const scene = new THREE.Scene();
-const scene_fb = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 45, 1, 1, 1000 );
-const camera_fb = new ForceCamera(45, window.innerWidth / window.innerHeight, 0.1, 100000);
 const renderer = new THREE.WebGLRenderer({
   antialias: true
 });
-const render_target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+const render_base = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+const scene_base = new THREE.Scene();
+const camera_base = new ForceCamera(45, window.innerWidth / window.innerHeight, 0.1, 100000);
 const hemisphere_light = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.1);
 const center_light = new THREE.PointLight(0xffffff, 0.4, 3000);
 const move_light = new ForceLight(0xffffff, 0.6, 500);
@@ -26,8 +26,9 @@ const exhibit_geometry = new THREE.PlaneGeometry(120, 120, 2, 2);
 const introduction = new Introduction();
 const information = new Information();
 const pager = new Pager();
+const bloom = new Bloom(render_base.texture);
+const bloom_force = new Force3();
 
-let plane = null;
 let sphere = null;
 let current_id = -1;
 let time = 0;
@@ -103,7 +104,7 @@ const initExhibit = (array) => {
           if (array.length == count) {
             mode = 1;
             for (var i = 0; i < exhibits.length; i++) {
-              scene_fb.add(exhibits[i]);
+              scene_base.add(exhibits[i]);
             }
             pager.setAllNum(exhibits.length);
             setTimeout(() => {
@@ -115,21 +116,6 @@ const initExhibit = (array) => {
     }, 3000);
   }
 };
-const createPlane = () => {
-  return new THREE.Mesh(
-    new THREE.PlaneBufferGeometry(2, 2),
-    new THREE.ShaderMaterial({
-      uniforms: {
-        texture: {
-          type: 't',
-          value: render_target,
-        },
-      },
-      vertexShader: glslify('../glsl/plane.vs'),
-      fragmentShader: glslify('../glsl/plane.fs'),
-    })
-  )
-}
 const createSphere = () => {
   const geometry = new THREE.SphereGeometry(40, 32, 32);
   const material = new THREE.MeshBasicMaterial({
@@ -146,11 +132,12 @@ const moveCameraAuto = (radius) => {
   );
 };
 const moveExhibit = (i) => {
-  camera_fb.move.anchor.copy(
+  camera_base.move.anchor.copy(
     exhibits[i].position.clone().normalize().multiplyScalar(exhibits[i].position.length() - 200)
   );
-  camera_fb.look.anchor.copy(exhibits[i].position);
+  camera_base.look.anchor.copy(exhibits[i].position);
   pager.setCurrentNum(i + 1);
+  bloom_force.anchor.set(0, 0, 0);
 };
 const moveNextExhibit = () => {
   if (information.is_viewed) return;
@@ -186,14 +173,15 @@ const backToPanorama = () => {
   current_id = -1;
   mode = 1;
   pager.hide();
-  camera_fb.look.anchor.set(0, 0, 0);
+  camera_base.look.anchor.set(0, 0, 0);
+  bloom_force.anchor.set(1.5, 0, 0);
 };
 const resizeRenderer = function() {
   const body_width  = document.body.clientWidth;
   const body_height = document.body.clientHeight;
   renderer.setSize(body_width, body_height);
-  camera_fb.aspect = body_width / body_height;
-  camera_fb.updateProjectionMatrix();
+  camera_base.aspect = body_width / body_height;
+  camera_base.updateProjectionMatrix();
 };
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {
@@ -244,23 +232,22 @@ const init = () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
-  camera_fb.move.velocity.copy(moveCameraAuto(3000));
-  camera_fb.move.anchor.copy(moveCameraAuto(4000));
-  camera_fb.render();
-  move_light.move.velocity.copy(camera_fb.move.position);
+  camera_base.move.velocity.copy(moveCameraAuto(3000));
+  camera_base.move.anchor.copy(moveCameraAuto(4000));
+  camera_base.render();
+  move_light.move.velocity.copy(camera_base.move.position);
   move_light.render();
 
   loadImage().then((array) => {
     initExhibit(array);
   });
-  plane = createPlane();
   sphere = createSphere();
 
-  scene.add(plane);
-  scene_fb.add(hemisphere_light);
-  scene_fb.add(center_light);
-  scene_fb.add(move_light);
-  scene_fb.add(sphere);
+  scene_base.add(hemisphere_light);
+  scene_base.add(center_light);
+  scene_base.add(move_light);
+  scene_base.add(sphere);
+  bloom_force.anchor.set(1.5, 0, 0);
 
   introduction.start();
   renderLoop();
@@ -270,15 +257,20 @@ const init = () => {
 const render = () => {
   if (mode == 1) {
     time++;
-    camera_fb.move.anchor.copy(moveCameraAuto(4000 - Math.sin(time / 500) * 2000));
+    camera_base.move.anchor.copy(moveCameraAuto(4000 - Math.sin(time / 500) * 2000));
   }
   if (mode >= 1) {
-    camera_fb.render();
-    move_light.move.anchor.copy(camera_fb.move.position);
+    camera_base.render();
+    move_light.move.anchor.copy(camera_base.move.position);
     move_light.render();
   }
-  renderer.render(scene_fb, camera_fb, render_target);
-  renderer.render(scene, camera);
+  bloom_force.applyHook(0, 0.02);
+  bloom_force.applyDrag(0.3);
+  bloom_force.updateVelocity();
+  bloom_force.updatePosition();
+  bloom.plane.bloom.uniforms.strength.value = bloom_force.velocity.length();
+  renderer.render(scene_base, camera_base, render_base);
+  bloom.render(renderer);
 };
 const renderLoop = () => {
   render();

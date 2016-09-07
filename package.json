@@ -38,6 +38,7 @@
     "watchify": "^3.6.1"
   },
   "dependencies": {
+    "glsl-fast-gaussian-blur": "^1.0.2",
     "glslify": "^5.0.0",
     "normalize.css": "^3.0.3"
   }
