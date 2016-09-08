@@ -180,8 +180,10 @@ const resizeRenderer = function() {
   const body_width  = document.body.clientWidth;
   const body_height = document.body.clientHeight;
   renderer.setSize(body_width, body_height);
+  render_base.setSize(body_width, body_height);
   camera_base.aspect = body_width / body_height;
   camera_base.updateProjectionMatrix();
+  bloom.resize();
 };
 const setEvent = () => {
   document.addEventListener('keydown', (event) => {
