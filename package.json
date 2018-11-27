@@ -21,7 +21,6 @@
     "browser-sync": "^2.10.1",
     "browserify": "^12.0.1",
     "del": "^2.2.0",
-    "event-stream": "^3.3.2",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.1",
     "gulp-filelist": "^0.2.0",
